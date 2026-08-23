@@ -1,0 +1,13 @@
+# OS & Editor temp files
+.DS_Store
+*~
+*.swp
+*.swo
+*.tmp
+*.log
+
+# Antigravity & AI scratch
+.agents/
+.codex/
+.cache/
+scratch/

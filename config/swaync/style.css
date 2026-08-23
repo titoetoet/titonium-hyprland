@@ -1,0 +1,262 @@
+:root {
+  --surface: #191114;
+  --surface-container: #261d20;
+  --content: #efdfe2;
+  --muted-content: #d5c2c6;
+  --accent: #ffb4ab;
+  --hover: rgba(255, 180, 171, 0.10);
+  --radius: 16px;
+  --cc-bg: #191114;
+  --noti-bg: 25, 17, 20;
+  --noti-bg-alpha: 1;
+  --noti-bg-darker: #191114;
+  --noti-bg-hover: rgba(255, 180, 171, 0.10);
+  --noti-bg-focus: rgba(255, 180, 171, 0.10);
+  --noti-border-color: transparent;
+  --text-color: #efdfe2;
+  --text-color-disabled: #d5c2c6;
+  --border: none;
+  --border-radius: 16px;
+}
+
+* {
+  font-family: Arial, sans-serif;
+}
+
+notificationwindow, blankwindow, .blank-window, .floating-notifications {
+  background: transparent;
+}
+
+.floating-notifications {
+  margin-top: 0;
+  margin-right: 8px;
+}
+
+.notification-row,
+.notification-row:focus,
+.notification-row .notification-background {
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+.notification-row .notification-background {
+  padding: 4px 0;
+}
+
+.notification-row .notification-background .notification {
+  background: var(--surface);
+  color: var(--content);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 15px rgba(139, 74, 98, 0.06);
+}
+
+.notification-row .notification-background .notification .notification-default-action {
+  background: transparent;
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: none;
+  color: var(--content);
+  padding: 7px 8px;
+}
+
+.notification-row .notification-background .notification .notification-default-action:hover,
+.notification-row .notification-background .notification .notification-action > button:hover {
+  background: var(--hover);
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .summary,
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .time {
+  color: var(--content);
+  font-size: 14px;
+  font-weight: 600;
+  text-shadow: none;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .text-box .body {
+  color: var(--muted-content);
+  font-size: 13px;
+  text-shadow: none;
+}
+
+.notification-row .notification-background .notification .notification-default-action .notification-content .image {
+  border-radius: 10px;
+  margin: 4px;
+}
+
+.close-button {
+  background: transparent;
+  color: var(--muted-content);
+  border: none;
+  border-radius: 999px;
+  box-shadow: none;
+  min-width: 22px;
+  min-height: 22px;
+}
+
+.close-button:hover {
+  background: var(--hover);
+  color: var(--accent);
+}
+
+.control-center {
+  background: var(--surface);
+  color: var(--content);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: 0 2px 15px rgba(139, 74, 98, 0.06);
+  padding: 8px;
+}
+
+.control-center .control-center-list,
+.control-center .control-center-list-placeholder,
+.control-center .notification-group,
+.control-center .notification-row .notification-background .notification {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  color: var(--muted-content);
+}
+
+.control-center .notification-row .notification-background {
+  padding: 4px;
+}
+
+.control-center .notification-row .notification-background .notification .notification-default-action {
+  border-radius: 10px;
+  padding: 5px 2px;
+}
+
+.control-center .notification-group .notification-group-headers,
+.control-center .notification-group .notification-group-buttons {
+  margin: 0 4px;
+  color: var(--muted-content);
+}
+
+.control-center .notification-group .notification-group-icon {
+  -gtk-icon-size: 18px;
+  color: var(--muted-content);
+}
+
+.control-center .notification-group .notification-group-header {
+  color: var(--muted-content);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.widget,
+.widget-title,
+.widget-dnd {
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  margin: 0;
+  padding: 6px 4px;
+}
+
+.widget-title > label {
+  color: var(--content);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.widget-title > button {
+  background: transparent;
+  color: var(--accent);
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+.widget-title > button:hover {
+  background: var(--hover);
+}
+
+.widget-dnd label {
+  color: var(--muted-content);
+  font-size: 13px;
+}
+
+.widget-dnd switch {
+  background: var(--surface-container);
+  border: none;
+  border-radius: 999px;
+}
+
+.widget-dnd switch:checked {
+  background: var(--accent);
+}
+
+.widget-dnd switch slider {
+  background: var(--content);
+  border-radius: 999px;
+}
+
+.notification-row .notification-background .notification .notification-action > button {
+  background: var(--surface-container);
+  color: var(--content);
+  border: none;
+  border-radius: 8px;
+  box-shadow: none;
+}
+
+/* The control center already has a global Clear all action; hide per-app group chrome. */
+.control-center .notification-group .notification-group-headers,
+.control-center .notification-group .notification-group-close-button {
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.control-center .notification-group .notification-group-icon {
+  -gtk-icon-size: 0;
+}
+
+.control-center .notification-group .notification-group-buttons {
+  min-height: 0;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+.control-center .notification-group .notification-group-buttons button {
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* Bottom clear control: icon-only, separate from notification actions. */
+.widget-buttons-grid {
+  padding: 8px 4px 2px;
+}
+
+.widget-buttons-grid flowboxchild > button {
+  background: transparent;
+  color: var(--accent);
+  border: none;
+  border-radius: 10px;
+  box-shadow: none;
+  font-family: monospace;
+  font-size: 18px;
+  min-height: 30px;
+}
+
+.widget-buttons-grid flowboxchild > button:hover {
+  background: var(--hover);
+}
+
+/* Keep notification history read-only in the control center. */
+.control-center .notification-row .close-button {
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}

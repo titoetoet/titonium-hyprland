@@ -1,0 +1,81 @@
+// Zed settings
+//
+// For information on how to configure Zed, see the Zed
+// documentation: https://zed.dev/docs/configuring-zed
+//
+// To see all of Zed's default settings without changing your
+// custom settings, run `zed: open default settings` from the
+// command palette (cmd-shift-p / ctrl-shift-p)
+{
+  "language_models": {
+    "anthropic_compatible": {
+      "Minimax": {
+        "api_url": "https://api.minimax.io/anthropic",
+        "available_models": [
+          {
+            "name": "MiniMax-M3",
+            "max_tokens": 1200000,
+            "max_output_tokens": 32000,
+            "extra_beta_headers": [],
+            "capabilities": {
+              "tools": true,
+              "images": false,
+              "prompt_caching": false
+            }
+          }
+        ]
+      }
+    }
+  },
+  "cli_default_open_behavior": "existing_window",
+  "agent": {
+    "sandbox_permissions": {
+      "write_paths": [
+        {
+          "requested": "/home/cole/.config/hypr",
+          "resolved": "/home/cole/.config/hypr"
+        },
+        {
+          "requested": "/home/cole/.config/swaync",
+          "resolved": "/home/cole/.config/swaync"
+        }
+      ],
+      "network_hosts": [
+        "raw.githubusercontent.com",
+        "api.github.com",
+        "wiki.hypr.land"
+      ]
+    },
+    "default_model": {
+      "provider": "zed.dev",
+      "model": "gpt-5.6-terra",
+      "enable_thinking": true,
+      "effort": "medium"
+    },
+    "favorite_models": [],
+    "model_parameters": [],
+    "tool_permissions": {
+      "tools": {
+        "terminal": {
+          "default": "allow"
+        }
+      }
+    }
+  },
+  "agent_ui_font_size": 18.0,
+  "ui_font_family": "Arial",
+  "buffer_font_family": "LiterationMono Nerd Font",
+  "icon_theme": "JetBrains New UI Icons (Dark)",
+  "agent_servers": {
+    "github-copilot-cli": {
+      "type": "registry"
+    }
+  },
+  "ui_font_size": 18.0,
+  "buffer_font_size": 16.0,
+  "theme": {
+    "mode": "dark",
+    "light": "One Light",
+    "dark": "JetBrains Dark",
+  },
+}
