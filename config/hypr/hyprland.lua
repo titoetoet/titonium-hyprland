@@ -67,7 +67,7 @@ local menu        = "hyprlauncher"
 -- Start the Fcitx5 input method once per Hyprland session.
 hl.on("hyprland.start", function ()
     hl.exec_cmd("fcitx5 -d --replace")
-    hl.exec_cmd("qs -n -d -c titonium")
+    hl.exec_cmd("qs -n -d -p /home/cole/Projects/titonium")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("hyprpaper")
 
@@ -117,6 +117,35 @@ hl.env("GLFW_IM_MODULE", "ibus")
 
 -- Window decoration theme. Change "dark" to "light" to switch.
 local windowStyle = require("themes/light")
+
+-- ── HyprGlass: native Liquid Glass for titonium layer surfaces ─────────────
+if hl.plugin.hyprglass then
+    local hg = hl.plugin.hyprglass
+
+    hg.config({
+        default_theme = "dark",
+        layers = { enabled = 1 },
+    })
+
+    -- Custom preset tuned for a readable desktop shell
+    hg.preset("titonium", {
+        inherits = "subtle",
+        glass_opacity = 0.9,
+        blur_strength = 1.4,
+        blur_iterations = 3,
+        refraction_strength = 0.4,
+        chromatic_aberration = 0.4,
+        fresnel_strength = 0.45,
+        specular_strength = 0.6,
+        edge_thickness = 0.05,
+    })
+
+    hg.layer("titonium-panel",              { preset = "titonium" })
+    hg.layer("titonium-spotlight",          { preset = "titonium" })
+    hg.layer("titonium-settings",           { preset = "titonium" })
+    hg.layer("titonium-window-switcher",    { preset = "titonium" })
+    hg.layer("titonium-notification-popup", { preset = "titonium", mask_threshold = 0.02 })
+end
 
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
@@ -314,10 +343,9 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
-hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("qs -c titonium ipc call spotlight clipboard"))
+hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call spotlight clipboard"))
+hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call spotlight toggle"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
-hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("qs -c titonium ipc call spotlight toggle"))
-hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("qs -c titonium ipc call spotlight toggle"))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
@@ -421,45 +449,15 @@ hl.window_rule({
 
 
 
--- Open the Quickshell switcher and enter its submap.
-hl.bind(mainMod .. " + TAB", function()
-    hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher next"))
-    hl.dispatch(hl.dsp.submap("switcher"))
-end)
-
-hl.bind(mainMod .. " + SHIFT + TAB", function()
-    hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher previous"))
-    hl.dispatch(hl.dsp.submap("switcher"))
-end)
-
--- Keys while the switcher is open. RETURN alone selects the highlighted window.
--- The submap is left when the switcher closes (handled by the shell via hyprctl).
-hl.define_submap("switcher", function()
-    hl.bind(mainMod .. " + TAB",         hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher next"))
-    hl.bind(mainMod .. " + SHIFT + TAB", hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher previous"))
-    hl.bind("RETURN", function()
-        hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher accept"))
-        hl.dispatch(hl.dsp.submap(""))
-    end)
-    hl.bind(mainMod .. " + RETURN", function()
-        hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher accept"))
-        hl.dispatch(hl.dsp.submap(""))
-    end)
-    hl.bind("ESCAPE", function()
-        hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher close"))
-        hl.dispatch(hl.dsp.submap(""))
-    end)
-    hl.bind(mainMod .. " + ESCAPE", function()
-        hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher close"))
-        hl.dispatch(hl.dsp.submap(""))
-    end)
-end)
+-- Native Titonium switcher: direct IPC keeps keyboard state in QML and avoids submaps.
+hl.bind(mainMod .. " + TAB",
+    hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call window-switcher next"))
+hl.bind(mainMod .. " + SHIFT + TAB",
+    hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call window-switcher previous"))
 
 local function releaseSuperToAccept()
-    if hl.get_current_submap() == "switcher" then
-        hl.dispatch(hl.dsp.exec_cmd("qs -c titonium ipc call window-switcher accept"))
-        hl.dispatch(hl.dsp.submap(""))
-    end
+    hl.dispatch(hl.dsp.exec_cmd(
+        "qs -p /home/cole/Projects/titonium ipc call window-switcher accept"))
 end
 
 hl.bind("SUPER_L", releaseSuperToAccept, { release = true, transparent = true, ignore_mods = true })
