@@ -30,6 +30,7 @@ application/wps-office.wps=wps-office-prometheus.desktop
 application/wps-office.wpss=wps-office-prometheus.desktop
 application/wps-office.wpso=wps-office-prometheus.desktop
 application/wps-office.wpt=wps-office-prometheus.desktop
+x-scheme-handler/slack=slack.desktop
 
 [Added Associations]
 application/wps-office.potx=wps-office-prometheus.desktop;
@@ -43,3 +44,4 @@ application/wps-office.docx=wps-office-prometheus.desktop;
 application/wps-office.dotx=wps-office-prometheus.desktop;
 application/wps-office.wpss=wps-office-prometheus.desktop;
 application/wps-office.wpso=wps-office-prometheus.desktop;
+x-scheme-handler/slack=slack.desktop;

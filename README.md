@@ -69,7 +69,7 @@ Cross-reference table between repository backup files (`config/`, `home/`, `asse
 | **Hyprpaper** | `config/hypr/hyprpaper.conf` | `~/.config/hypr/hyprpaper.conf` | Multi-monitor wallpaper preloading and assignment |
 | **Scripts** | `config/hypr/scripts/` | `~/.config/hypr/scripts/` | Helper scripts (`screenshot.sh`, `screenrecord.sh`) |
 | **SwayNC** | `config/swaync/` | `~/.config/swaync/` | Notification daemon settings (`config.json`) and styling (`style.css`) |
-| **Titonium Settings** | `config/titonium/settings.json` | `~/.config/titonium/settings.json` | Persistent user profile settings (avatar, visualizer mode) |
+| **Titonium Settings** | `config/titonium/settings.json` | `~/.config/titonium/settings.json` | Persistent user profile and desktop shell styling (theme, glass opacity, widgets, visualizer) |
 
 ---
 
@@ -93,7 +93,7 @@ Cross-reference table between repository backup files (`config/`, `home/`, `asse
 | **Fontconfig** | `config/fontconfig/fonts.conf` | `~/.config/fontconfig/fonts.conf` | System font priority mapping (Sans-serif, Serif, Monospace) |
 | **Xsettingsd** | `config/xsettingsd/xsettingsd.conf` | `~/.config/xsettingsd/xsettingsd.conf` | GTK appearance synchronization for XWayland applications |
 | **MIME Apps** | `config/mimeapps.list` | `~/.config/mimeapps.list` | Default file type handler associations |
-| **Fonts** | `assets/fonts/` | `~/.local/share/fonts/` | Core fonts: `Apple Inc. Typeface` (SF Pro), `JetBrainsMono`, `Windows 11 UI Font` (32MB) |
+| **Fonts** | `assets/fonts/` | `~/.local/share/fonts/` | Core fonts: `Apple Inc. Typeface` (SF Pro), `JetBrainsMono`, `Windows 11 UI Font`, `phosphor` |
 | **Wallpapers** | `assets/wallpapers/` | `~/Pictures/Wallpapers/` | Desktop wallpaper collection managed by Hyprpaper |
 
 ---

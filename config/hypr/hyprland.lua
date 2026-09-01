@@ -116,7 +116,7 @@ hl.env("GLFW_IM_MODULE", "ibus")
 -----------------------
 
 -- Window decoration theme. Change "dark" to "light" to switch.
-local windowStyle = require("themes/light")
+local windowStyle = require("themes/dark")
 
 -- ── HyprGlass: native Liquid Glass for titonium layer surfaces ─────────────
 if hl.plugin.hyprglass then
@@ -431,11 +431,6 @@ hl.window_rule({
 })
 
 -- Layer rules also return a handle.
--- local overlayLayerRule = hl.layer_rule({
---     name  = "no-anim-overlay",
---     match = { namespace = "^my-overlay$" },
---     no_anim = true,
--- })
 -- overlayLayerRule:set_enabled(false)
 
 -- Hyprland-run windowrule
@@ -462,3 +457,9 @@ end
 
 hl.bind("SUPER_L", releaseSuperToAccept, { release = true, transparent = true, ignore_mods = true })
 hl.bind("SUPER_R", releaseSuperToAccept, { release = true, transparent = true, ignore_mods = true })
+
+-- Ambxst
+-- loadfile(os.getenv("HOME") .. "/.local/share/ambxst/hyprland.lua")()
+
+-- OVERRIDES
+-- Down here you can write or source anything that you want to override from Ambxst's settings.

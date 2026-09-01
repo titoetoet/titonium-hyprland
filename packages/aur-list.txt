@@ -1,3 +1,8 @@
+9router-webui-bin
 antigravity-ide
 chatgpt-desktop
+docker-desktop
 fcitx5-lotus-bin
+headroom-ai-bin
+opera
+pi-coding-agent-bin
