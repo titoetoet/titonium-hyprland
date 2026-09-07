@@ -44,9 +44,11 @@ hl.monitor({
 ---------------------
 
 -- Set programs that you use
-local terminal    = "kitty"
-local fileManager = "kitty yazi"
-local menu        = "hyprlauncher"
+local terminal       = "kitty"
+local fileManager    = "kitty --class yazi -e yazi"
+local guiFileManager = "dolphin"
+local menu           = "hyprlauncher"
+local systemMonitor  = "kitty --class btop -e btop"
 
 
 -------------------
@@ -58,21 +60,18 @@ local menu        = "hyprlauncher"
 -- Autostart necessary processes (like notifications daemons, status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
--- hl.on("hyprland.start", function ()
+-- hl.on("hyprland.start", function () 
 --   hl.exec_cmd(terminal)
 --   hl.exec_cmd("nm-applet")
 --   hl.exec_cmd("waybar & hyprpaper & firefox")
 -- end)
 
--- Start the Fcitx5 input method once per Hyprland session.
 hl.on("hyprland.start", function ()
     hl.exec_cmd("fcitx5 -d --replace")
     hl.exec_cmd("qs -n -d -p /home/cole/Projects/titonium")
     hl.exec_cmd("hypridle")
     hl.exec_cmd("hyprpaper")
-
 end)
-
 
 -------------------------------
 ---- ENVIRONMENT VARIABLES ----
@@ -82,6 +81,8 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+hl.env("ELECTRON_OZONE_PLATFORM_HINT", "auto")
+hl.env("TERMINAL", "kitty")
 
 -- Fcitx5 integration for Wayland, XWayland, GTK, Qt, SDL, and GLFW apps.
 hl.env("XMODIFIERS", "@im=fcitx")
@@ -90,6 +91,10 @@ hl.env("XMODIFIERS", "@im=fcitx")
 -- hl.env("QT_IM_MODULES", "wayland;fcitx")
 hl.env("SDL_IM_MODULE", "fcitx")
 hl.env("GLFW_IM_MODULE", "ibus")
+
+-- Dark theme for GTK and QT
+hl.env("GTK_THEME", "Adwaita:dark")
+hl.env("QT_STYLE_OVERRIDE", "Fusion")
 
 
 -----------------------
@@ -115,55 +120,17 @@ hl.env("GLFW_IM_MODULE", "ibus")
 ---- LOOK AND FEEL ----
 -----------------------
 
--- Window decoration theme. Change "dark" to "light" to switch.
-local windowStyle = require("themes/dark")
-
--- ── HyprGlass: native Liquid Glass for titonium layer surfaces ─────────────
-if hl.plugin.hyprglass then
-    local hg = hl.plugin.hyprglass
-
-    hg.config({
-        default_theme = "dark",
-        layers = { enabled = 1 },
-    })
-
-    -- Custom preset tuned for a readable desktop shell
-    hg.preset("titonium", {
-        inherits = "subtle",
-        glass_opacity = 0.9,
-        blur_strength = 1.4,
-        blur_iterations = 3,
-        refraction_strength = 0.4,
-        chromatic_aberration = 0.4,
-        fresnel_strength = 0.45,
-        specular_strength = 0.6,
-        edge_thickness = 0.05,
-    })
-
-    hg.layer("titonium-panel",              { preset = "titonium" })
-    hg.layer("titonium-spotlight",          { preset = "titonium" })
-    hg.layer("titonium-settings",           { preset = "titonium" })
-    hg.layer("titonium-window-switcher",    { preset = "titonium" })
-    hg.layer("titonium-notification-popup", { preset = "titonium", mask_threshold = 0.02 })
-end
-
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
-    -- Render legacy XWayland apps at their real resolution. Apps such as WPS
-    -- provide their own UI scale, avoiding blurry compositor upscaling at 150%.
-    xwayland = {
-        force_zero_scaling = true,
-    },
-
     general = {
-        gaps_in  = 2,
-        gaps_out = { top = 0, right = 5, bottom = 5, left = 5 },
+        gaps_in  = 5,
+        gaps_out = { top = 12, right = 10, bottom = 10, left = 10 },
 
-        border_size = windowStyle.borderSize,
+        border_size = 2,
 
         col = {
-            active_border   = windowStyle.activeBorder,
-            inactive_border = windowStyle.inactiveBorder,
+            active_border   = "rgba(5b9cffcc)",
+            inactive_border = "rgba(4a536099)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
@@ -176,7 +143,7 @@ hl.config({
     },
 
     decoration = {
-        rounding       = windowStyle.rounding,
+        rounding       = 12,
         rounding_power = 2,
 
         -- Change transparency of focused and unfocused windows
@@ -184,11 +151,10 @@ hl.config({
         inactive_opacity = 1.0,
 
         shadow = {
-            enabled        = true,
-            range          = windowStyle.shadow.range,
-            render_power   = windowStyle.shadow.renderPower,
-            color          = windowStyle.shadow.activeColour,
-            color_inactive = windowStyle.shadow.inactiveColour,
+            enabled      = true,
+            range        = 22,
+            render_power = 3,
+            color        = "rgba(00000045)",
         },
 
         blur = {
@@ -272,17 +238,6 @@ hl.config({
 })
 
 ----------------
----- CURSOR ----
-----------------
-
-hl.config({
-    cursor = {
-        no_warps = true,
-        warp_on_change_workspace = 0,
-    },
-})
-
-----------------
 ----  MISC  ----
 ----------------
 
@@ -290,8 +245,18 @@ hl.config({
     misc = {
         force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
         disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        key_press_enables_dpms  = true,
+        mouse_move_enables_dpms = true,
+        allow_session_lock_restore = true,
     },
 })
+
+hl.config({
+    xwayland = {
+        force_zero_scaling = true,
+    },
+})
+
 
 
 ---------------
@@ -306,7 +271,7 @@ hl.config({
         kb_options = "",
         kb_rules   = "",
 
-        follow_mouse = 0,
+        follow_mouse = 1,
 
         sensitivity = 0, -- -1.0 - 1.0, 0 means no modification.
 
@@ -342,12 +307,16 @@ local closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
-hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + SHIFT + E", hl.dsp.exec_cmd(guiFileManager))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd(systemMonitor))
+hl.bind("CTRL + SHIFT + Escape", hl.dsp.exec_cmd(systemMonitor))
 hl.bind(mainMod .. " + V", hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call spotlight clipboard"))
 hl.bind(mainMod .. " + space", hl.dsp.exec_cmd("qs -p /home/cole/Projects/titonium ipc call spotlight toggle"))
 hl.bind(mainMod .. " + SHIFT + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 
 -- Screenshots: save to ~/Pictures/Screenshots and copy to the clipboard.
 hl.bind("CTRL + SHIFT + S",     hl.dsp.exec_cmd("sh ~/.config/hypr/scripts/screenshot.sh region"))
@@ -431,6 +400,11 @@ hl.window_rule({
 })
 
 -- Layer rules also return a handle.
+-- local overlayLayerRule = hl.layer_rule({
+--     name  = "no-anim-overlay",
+--     match = { namespace = "^my-overlay$" },
+--     no_anim = true,
+-- })
 -- overlayLayerRule:set_enabled(false)
 
 -- Hyprland-run windowrule
@@ -442,7 +416,22 @@ hl.window_rule({
     float = true,
 })
 
+-- Float and center btop & yazi
+hl.window_rule({
+    name   = "float-btop",
+    match  = { class = "btop" },
+    float  = true,
+    size   = "1500 900",
+    center = true,
+})
 
+hl.window_rule({
+    name   = "float-yazi",
+    match  = { class = "yazi" },
+    float  = true,
+    size   = "1200 750",
+    center = true,
+})
 
 -- Native Titonium switcher: direct IPC keeps keyboard state in QML and avoids submaps.
 hl.bind(mainMod .. " + TAB",
@@ -457,9 +446,3 @@ end
 
 hl.bind("SUPER_L", releaseSuperToAccept, { release = true, transparent = true, ignore_mods = true })
 hl.bind("SUPER_R", releaseSuperToAccept, { release = true, transparent = true, ignore_mods = true })
-
--- Ambxst
--- loadfile(os.getenv("HOME") .. "/.local/share/ambxst/hyprland.lua")()
-
--- OVERRIDES
--- Down here you can write or source anything that you want to override from Ambxst's settings.

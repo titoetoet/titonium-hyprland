@@ -1,9 +1,9 @@
 -- Light theme (macOS-inspired) — window decoration styles.
 return {
-    borderSize     = 0,
+    borderSize     = 2,
     rounding       = 16,
-    activeBorder   = "rgba(00000015)",
-    inactiveBorder = "rgba(00000008)",
+    activeBorder   = "rgba(1769e0cc)",
+    inactiveBorder = "rgba(929aa599)",
     shadow = {
         range          = 32,
         renderPower    = 4,

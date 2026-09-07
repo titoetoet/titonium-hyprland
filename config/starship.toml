@@ -1,0 +1,112 @@
+# Get editor completions based on the config schema
+"$schema" = 'https://starship.rs/config-schema.json'
+
+# Inserts a blank line between shell prompts
+add_newline = true
+
+# Format of the prompt
+format = """
+$os\
+$directory\
+$git_branch\
+$git_status\
+$package\
+$nodejs\
+$python\
+$rust\
+$golang\
+$docker_context\
+$fill\
+$cmd_duration\
+$time\
+$line_break\
+$character"""
+
+# Fill empty space
+[fill]
+symbol = " "
+
+[character]
+success_symbol = "[❯](bold #89b4fa)"
+error_symbol = "[❯](bold #f38ba8)"
+vimcmd_symbol = "[❮](bold #a6e3a1)"
+
+[os]
+disabled = false
+style = "bold #89dceb"
+
+[os.symbols]
+Arch = "󰣇 "
+Ubuntu = "󰕈 "
+Debian = "󰣚 "
+Macos = "󰀵 "
+Linux = "󰌽 "
+
+[directory]
+style = "bold #89b4fa"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncation_symbol = "…/"
+home_symbol = " ~"
+read_only = " 󰌾"
+read_only_style = "bold #f38ba8"
+
+[git_branch]
+symbol = " "
+style = "bold #f5c2e7"
+format = "on [$symbol$branch]($style) "
+
+[git_status]
+style = "bold #f38ba8"
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "🏳 "
+ahead = "⇡${count} "
+behind = "⇣${count} "
+diverged = "⇕⇡${ahead_count}⇣${behind_count} "
+untracked = "? "
+stashed = "📦 "
+modified = "! "
+staged = "+ "
+renamed = "» "
+deleted = "✘ "
+
+[nodejs]
+symbol = "󰎙 "
+style = "bold #a6e3a1"
+format = "via [$symbol($version )]($style)"
+
+[python]
+symbol = "󰌠 "
+style = "bold #f9e2af"
+format = "via [${symbol}${pyenv_prefix}(${version} )(\\($virtualenv\\) )]($style)"
+
+[rust]
+symbol = "󱘗 "
+style = "bold #fab387"
+format = "via [$symbol($version )]($style)"
+
+[golang]
+symbol = "󰟓 "
+style = "bold #74c7ec"
+format = "via [$symbol($version )]($style)"
+
+[docker_context]
+symbol = "󰡨 "
+style = "bold #89b4fa"
+format = "via [$symbol$context]($style) "
+
+[package]
+symbol = "󰏗 "
+style = "bold #cba6f7"
+format = "[$symbol$version]($style) "
+
+[cmd_duration]
+min_time = 2_000
+style = "bold #f9e2af"
+format = "took [$duration]($style) "
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bold #6c7086"
+format = "at [$time]($style) "

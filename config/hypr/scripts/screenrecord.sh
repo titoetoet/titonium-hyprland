@@ -2,13 +2,15 @@
 
 #!/bin/bash
 
-# Kiểm tra nếu wf-recorder đang chạy thì tắt để lưu file
+# Check if wf-recorder is running; if so, stop it to save the recording
 if pkill -SIGINT wf-recorder; then
     exit 0
 fi
 
-# Tự động lấy tên màn hình đang focus
+mkdir -p "$HOME/Videos"
+
+# Automatically detect currently focused monitor
 ACTIVE_MONITOR=$(hyprctl activeworkspace | grep -o 'on monitor [^:]*' | awk '{print $3}')
 
-# Bắt đầu quay bằng Radeon (VA-API) - CHỈ QUAY HÌNH, KHÔNG THU ÂM
+# Start recording via Radeon (VA-API) - VIDEO ONLY, NO AUDIO
 wf-recorder -c hevc_vaapi -d /dev/dri/renderD128 -o "$ACTIVE_MONITOR" -f "$HOME/Videos/record_${ACTIVE_MONITOR}_$(date +%Y%m%d_%H%M%S).mp4"
